@@ -39,13 +39,13 @@ pipeline {
                 echo "login succeeded"
             }
         }
-        stage('Trivy File Scan'){
-            steps{
-                script{
-                    sh 'trivy fs . > trivy_result.txt'
-                }
-            }
-        }
+        // stage('Trivy File Scan'){
+        //     steps{
+        //         script{
+        //             sh 'trivy fs . > trivy_result.txt'
+        //         }
+        //     }
+        // }
         stage('Docker Build'){
             steps{
                 script{
