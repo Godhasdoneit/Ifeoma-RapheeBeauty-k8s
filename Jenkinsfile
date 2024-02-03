@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    enviroment{
+    environment{
         SCANNER_HOME=tool 'sonar-scanner'
         DOCKERHUB_CREDENTIALS=credentials('716274dc-f41e-4e10-9f58-f501c9063a39')
     }
