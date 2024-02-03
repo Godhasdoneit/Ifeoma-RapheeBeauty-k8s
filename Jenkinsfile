@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Quality Gate'){
             steps{
-                scripts{
+                script{
                     waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
                 }
             }
@@ -41,14 +41,14 @@ pipeline {
         }
         stage('Trivy File Scan'){
             steps{
-                scripts{
+                script{
                     sh 'trivy fs . > trivy_result.txt'
                 }
             }
         }
         stage('Docker Build'){
             steps{
-                scripts{
+                script{
                    sh 'docker build -t blesseddocker/ifeoma-rapheebeauty:latest .'
                    echo "Image Build Successfully"
                     
@@ -58,14 +58,14 @@ pipeline {
 
         stage('Trivy Image Scan'){
             steps{
-                scripts{
+                script{
                     sh 'trivy image ifeoma-rapheebeauty:latest'
                 }
             }
         }
         stage('Docker push'){
             steps{
-                scripts{
+                script{
                     sh "docker push blesseddocker/ifeoma-rapheebeauty:latest"
                     echo "Push Image to Registry"
                 }
