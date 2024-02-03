@@ -51,7 +51,7 @@ pipeline {
             steps{
                 script{
                    def imageTag = determineTargetEnvironment() 
-                   sh 'docker build -t blesseddocker/ifeoma-rapheebeauty:${imageTag} .'
+                   sh "docker build -t blesseddocker/ifeoma-rapheebeauty:${imageTag} ."
                    echo "Image Build Successfully"
                     
                 }
@@ -62,7 +62,7 @@ pipeline {
             steps{
                 script{
                     def imageTag = determineTargetEnvironment() 
-                    sh 'trivy image blesseddocker/ifeoma-rapheebeauty:${imageTag}'
+                    sh "trivy image blesseddocker/ifeoma-rapheebeauty:${imageTag}"
                 }
             }
         }
