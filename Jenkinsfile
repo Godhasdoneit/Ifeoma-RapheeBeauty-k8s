@@ -3,6 +3,7 @@ pipeline {
     environment{
         SCANNER_HOME=tool 'sonar-scanner'
         DOCKERHUB_CREDENTIALS=credentials('716274dc-f41e-4e10-9f58-f501c9063a39')
+        BRANCH_NAME = "${GIT_BRANCH.split("/")[1]}"
     }
     stages{
        stage('Clean workspace'){
@@ -49,7 +50,8 @@ pipeline {
         stage('Docker Build'){
             steps{
                 script{
-                   sh 'docker build -t blesseddocker/ifeoma-rapheebeauty:latest .'
+                   def imageTag = determineTargetEnvironment() 
+                   sh 'docker build -t blesseddocker/ifeoma-rapheebeauty:${imageTag} .'
                    echo "Image Build Successfully"
                     
                 }
@@ -59,14 +61,16 @@ pipeline {
         stage('Trivy Image Scan'){
             steps{
                 script{
-                    sh 'trivy image blesseddocker/ifeoma-rapheebeauty:latest'
+                    def imageTag = determineTargetEnvironment() 
+                    sh 'trivy image blesseddocker/ifeoma-rapheebeauty:${imageTag}'
                 }
             }
         }
         stage('Docker push'){
             steps{
                 script{
-                    sh "docker push blesseddocker/ifeoma-rapheebeauty:latest"
+                    def imageTag = determineTargetEnvironment() 
+                    sh "docker push blesseddocker/ifeoma-rapheebeauty:${imageTag}"
                     echo "Push Image to Registry"
                 }
             }
@@ -74,3 +78,14 @@ pipeline {
         
     }
 }
+def determineTargetEnvironment() {
+    def branchName = env.BRANCH_NAME
+    if (branchName == 'qa') {
+        return 'qa'
+    } else if (branchName == 'prod') {
+        return 'prod'
+    } else {
+        return 'dev'
+    }
+}
+
