@@ -16,7 +16,6 @@ pipeline {
                     checkout scmGit(branches: [[name: '*/dev'], [name: '*/qa'], [name: '*/prod']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/AfriTech-DevOps/Ifeoma-RapheeBeauty.git']])
                 }
             }
-
         }
         stage('Sonarqube Analysis'){
             steps{
