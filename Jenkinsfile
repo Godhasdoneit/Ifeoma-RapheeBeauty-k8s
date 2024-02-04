@@ -75,6 +75,18 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy'){
+            steps{
+                script{
+                    dir('./k8s') {
+                        kubeconfig(credentialsId: 'kube-config', serverUrl: '') {
+                            def targetEnvironment = determineTargetEnvironment()
+                            sh "kubectl apply -f ${targetEnvironment}-deployment.yaml"
+                            sh "kubectl apply -f ${targetEnvironment}-service.yaml"
+                }
+            }
+        }
         
     }
 }
