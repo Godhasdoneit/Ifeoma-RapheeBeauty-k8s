@@ -27,3 +27,12 @@ spec:
             requests:
               memory: "500Mi"
               cpu: "250m"
+          env:
+          - name: MYSQL_HOST
+            value: 216.80.104.71
+          - name: MYSQL_USER
+            value: root
+          - name: MYSQL_PASSWORD
+            value: devops2023
+          - name: MYSQL_DATABASE
+            value: rapheebeauty
