@@ -84,6 +84,8 @@ pipeline {
                             def targetEnvironment = determineTargetEnvironment()
                             sh "kubectl apply -f ${targetEnvironment}-deployment.yaml"
                             sh "kubectl apply -f ${targetEnvironment}-service.yaml"
+                        }
+                    }
                 }
             }
         }
