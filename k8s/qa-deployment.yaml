@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rapheebeauty-qa
+  namespace: qa-namespace
+  labels:
+    app: rapheebeauty-qa
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rapheebeauty-qa
+  template:
+    metadata:
+      labels:
+        app: rapheebeauty-qa
+    spec:
+      containers:
+        - name: rapheebeauty-qa
+          image: blesseddocker/ifeoma-rapheebeauty:qa
+          ports:
+            - containerPort: 8000
+          resources:
+            limits:
+              memory: "1000Mi"
+              cpu: "500m"
+            requests:
+              memory: "500Mi"
+              cpu: "250m"
